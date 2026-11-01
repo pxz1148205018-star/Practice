@@ -1,23 +1,26 @@
 package org.example;
 
-class Solution {
-    public static void moveZeroes(int[] nums){
-        int j = 0;
-        for(int i = 0;i < nums.length;i++){
-            if(nums[i] != 0){
-                nums[j++] = nums[i];
-            }
-        }
-        for(int i = j;i < nums.length;i++){
-            nums[i] = 0;
-        }
-    }
-    static void main() {
-        int nums[] = {1, 1, 0, 0, 2, 2, 0};
-        moveZeroes(nums);
+import java.util.HashMap;
+import java.util.Stack;
 
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        Stack<Integer> stack = new Stack<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int num : nums2) {
+            while(!stack.isEmpty() && stack.peek() <= num) {
+                map.put(stack.pop(), num);
+            }
+            stack.push(num);
+        }
+        int[] res = new int[nums1.length];
+        for(int i = 0; i < nums1.length; i++) {
+            res[i] = map.getOrDefault(nums1[i],-1);
+        }
+        return res;
     }
 }
+
 
 
 
